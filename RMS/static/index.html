@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spicehollic | Premium Restaurant Management & POS Ecosystem</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        orange: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                        }
+                    },
+                    fontSize: {
+                        '2xs': '0.6875rem',
+                        '3xs': '0.625rem',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom Stylesheet with tokens from DESIGN.md -->
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👑</text></svg>">
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased h-screen flex overflow-hidden">
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed top-5 right-5 flex flex-col gap-2.5 z-50 pointer-events-none"></div>
+
+    <!-- Collapsible Sidebar matching Prompt Specs & Stripe/Linear Elegance -->
+    <aside id="main-sidebar" class="w-64 bg-slate-950 text-slate-300 flex flex-col shrink-0 border-r border-slate-800/80 select-none z-30 transition-all duration-300">
+        <!-- Brand Identity Section -->
+        <div class="p-5 border-b border-slate-800/80 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-orange-600 to-amber-500 text-white flex items-center justify-center font-black shadow-lg shadow-orange-950/40">
+                <i data-lucide="flame" class="w-5 h-5"></i>
+            </div>
+            <div class="min-w-0">
+                <span class="text-xs font-black uppercase tracking-widest text-orange-500 block leading-tight">SPICEHOLLIC</span>
+                <span class="text-3xs text-slate-400 font-medium block truncate">Run Your Restaurant Smarter.</span>
+            </div>
+        </div>
+
+        <!-- Sidebar Navigation List -->
+        <div class="flex-1 overflow-y-auto p-3 space-y-1">
+            <div class="px-3 py-1.5 text-3xs font-extrabold uppercase tracking-wider text-slate-500">Core Suite</div>
+            
+            <button onclick="navigateTo('dashboard')" data-view="dashboard" class="sidebar-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm text-white bg-orange-600 shadow-sm transition-colors w-full text-left">
+                <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                <span>Overview</span>
+            </button>
+
+            <button onclick="navigateTo('pos')" data-view="pos" class="sidebar-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm text-slate-300 hover:text-white hover:bg-slate-800 transition-colors w-full text-left">
+                <i data-lucide="calculator" class="w-4 h-4"></i>
+                <span>Point of Sale (POS)</span>
+            </button>
+
+            <button onclick="navigateTo('cashier')" data-view="cashier" class="sidebar-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm text-slate-300 hover:text-white hover:bg-slate-800 transition-colors w-full text-left">
+                <i data-lucide="badge-dollar-sign" class="w-4 h-4 text-emerald-400"></i>
+                <span>Cashier Dashboard</span>
+            </button>
+
+            <button onclick="navigateTo('kds')" data-view="kds" class="sidebar-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm text-slate-300 hover:text-white hover:bg-slate-800 transition-colors w-full text-left">
+                <i data-lucide="chef-hat" class="w-4 h-4"></i>
+                <span>Kitchen Display (KDS)</span>
+            </button>
+
+            <button onclick="navigateTo('waiter')" data-view="waiter" class="sidebar-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm text-slate-300 hover:text-white hover:bg-slate-800 transition-colors w-full text-left">
+                <i data-lucide="smartphone" class="w-4 h-4"></i>
+                <span>Waiter Mobile App</span>
+            </button>
+
+            <button onclick="navigateTo('qr')" data-view="qr" class="sidebar-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm text-slate-300 hover:text-white hover:bg-slate-800 transition-colors w-full text-left">
+                <i data-lucide="qr-code" class="w-4 h-4"></i>
+                <span>Customer QR Menu</span>
+            </button>
+
+            <button onclick="navigateTo('tables')" data-view="tables" class="sidebar-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm text-slate-300 hover:text-white hover:bg-slate-800 transition-colors w-full text-left">
+                <i data-lucide="table-2" class="w-4 h-4"></i>
+                <span>Table Management</span>
+            </button>
+
+            <div class="px-3 pt-3 py-1.5 text-3xs font-extrabold uppercase tracking-wider text-slate-500">Back Office</div>
+
+            <button onclick="navigateTo('inventory')" data-view="inventory" class="sidebar-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm text-slate-300 hover:text-white hover:bg-slate-800 transition-colors w-full text-left">
+                <i data-lucide="boxes" class="w-4 h-4"></i>
+                <span>Inventory & Recipes</span>
+            </button>
+
+            <button onclick="navigateTo('menu')" data-view="menu" class="sidebar-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm text-slate-300 hover:text-white hover:bg-slate-800 transition-colors w-full text-left">
+                <i data-lucide="utensils" class="w-4 h-4"></i>
+                <span>Menu Management</span>
+            </button>
+
+            <button onclick="navigateTo('billing')" data-view="billing" class="sidebar-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm text-slate-300 hover:text-white hover:bg-slate-800 transition-colors w-full text-left">
+                <i data-lucide="receipt" class="w-4 h-4"></i>
+                <span>Billing & Tax Invoices</span>
+            </button>
+
+            <button onclick="navigateTo('customers')" data-view="customers" class="sidebar-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm text-slate-300 hover:text-white hover:bg-slate-800 transition-colors w-full text-left">
+                <i data-lucide="users" class="w-4 h-4"></i>
+                <span>Customer CRM</span>
+            </button>
+
+            <button onclick="navigateTo('staff')" data-view="staff" class="sidebar-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm text-slate-300 hover:text-white hover:bg-slate-800 transition-colors w-full text-left">
+                <i data-lucide="user-check" class="w-4 h-4"></i>
+                <span>Staff & Shifts</span>
+            </button>
+
+            <button onclick="navigateTo('reports')" data-view="reports" class="sidebar-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm text-slate-300 hover:text-white hover:bg-slate-800 transition-colors w-full text-left">
+                <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+                <span>Reports & Analytics</span>
+            </button>
+
+            <button onclick="navigateTo('settings')" data-view="settings" class="sidebar-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-sm text-slate-300 hover:text-white hover:bg-slate-800 transition-colors w-full text-left">
+                <i data-lucide="settings" class="w-4 h-4"></i>
+                <span>Settings & QR Hub</span>
+            </button>
+        </div>
+
+        <!-- Sidebar Footer Staff Profile -->
+        <div class="p-3.5 border-t border-slate-800/80 bg-slate-900/60 flex items-center justify-between">
+            <div class="flex items-center gap-2.5 min-w-0">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&q=80" alt="Avatar" class="w-8 h-8 rounded-full object-cover shrink-0" />
+                <div class="min-w-0">
+                    <span class="font-bold text-xs text-white block truncate">Alex Vance</span>
+                    <span class="text-3xs text-orange-400 font-semibold block">Manager</span>
+                </div>
+            </div>
+            <button onclick="showToast('Active shift verified', 'info')" class="text-slate-400 hover:text-white">
+                <i data-lucide="log-out" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Workspace Container -->
+    <div class="flex-1 flex flex-col min-w-0 overflow-hidden bg-slate-100/60">
+        <!-- Top Navigation Bar -->
+        <header class="h-16 bg-white border-b border-slate-200/80 px-6 flex items-center justify-between shrink-0 z-20">
+            <!-- Left: Branch Selector & Quick Ecosystem Switcher -->
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl">
+                    <i data-lucide="store" class="w-4 h-4 text-orange-600"></i>
+                    <select id="branch-select" onchange="state.branch = this.value; renderDashboardView();" class="bg-transparent text-xs font-bold text-slate-800 focus:outline-none cursor-pointer">
+                        <option value="CP - Inner Circle 3" selected>CP - Inner Circle 3</option>
+                        <option value="Lajpat Nagar Outlet">Lajpat Nagar Outlet</option>
+                        <option value="Saket Outlet">Saket Outlet</option>
+                    </select>
+                </div>
+
+                <!-- Quick View Pills matching all major ecosystem apps -->
+                <div class="hidden xl:flex items-center gap-1.5 p-1 bg-slate-100 rounded-xl">
+                    <button onclick="navigateTo('dashboard')" data-view="dashboard" class="quick-view-pill px-3 py-1.5 rounded-lg text-xs font-semibold bg-orange-100 text-orange-700 border border-orange-300 shadow-xs">Admin</button>
+                    <button onclick="navigateTo('cashier')" data-view="cashier" class="quick-view-pill px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-200 transition-colors">Cashier</button>
+                    <button onclick="navigateTo('pos')" data-view="pos" class="quick-view-pill px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-200 transition-colors">POS</button>
+                    <button onclick="navigateTo('kds')" data-view="kds" class="quick-view-pill px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-200 transition-colors">Kitchen KDS</button>
+                    <button onclick="navigateTo('waiter')" data-view="waiter" class="quick-view-pill px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-200 transition-colors">Waiter</button>
+                    <button onclick="navigateTo('qr')" data-view="qr" class="quick-view-pill px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-200 transition-colors">Customer QR</button>
+                    <button onclick="navigateTo('inventory')" data-view="inventory" class="quick-view-pill px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-200 transition-colors">Inventory</button>
+                </div>
+            </div>
+
+            <!-- Right: Search, Connection Status Badge, Notifications -->
+            <div class="flex items-center gap-3">
+                <!-- Offline-First Connection Status Badge -->
+                <div id="connection-status-badge" onclick="toggleOfflineModeTest()" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 cursor-pointer" title="Click to test offline resilience">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    <span>Online</span>
+                </div>
+
+                <!-- Kitchen Sound Bell Indicator -->
+                <button onclick="toggleKDSSound()" class="p-2 rounded-xl text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition" title="Toggle Kitchen Audio Chime">
+                    <i data-lucide="bell" class="w-4 h-4"></i>
+                </button>
+
+                <!-- API Docs Link -->
+                <a href="/docs" target="_blank" class="px-3 py-1.5 text-xs font-bold text-slate-600 hover:text-orange-600 hover:bg-slate-50 border border-slate-200 rounded-xl transition">
+                    Swagger API
+                </a>
+            </div>
+        </header>
+
+        <!-- Main Dynamic Content Workspace -->
+        <main id="main-content-area" class="flex-1 overflow-y-auto p-6">
+            <!-- Dynamic view injected via JavaScript -->
+        </main>
+    </div>
+
+    <!-- Core Scripts -->
+    <script src="/static/js/websocket.js"></script>
+    <script src="/static/js/offline.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

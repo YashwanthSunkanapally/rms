@@ -1,0 +1,130 @@
+/* RESTO DADDY - Design System Stylesheet based on DESIGN.md */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap');
+
+:root {
+  --primary: #F97316;
+  --primary-hover: #EA580C;
+  --primary-light: #FFF7ED;
+  --secondary: #FDBA74;
+  --sidebar-bg: #111827;
+  --sidebar-hover: #1F2937;
+  --canvas-bg: #F8FAFC;
+  --card-bg: #FFFFFF;
+  --text-primary: #0F172A;
+  --text-secondary: #64748B;
+  --border-color: #E2E8F0;
+  --border-subtle: #F1F5F9;
+  --success: #16A34A;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--canvas-bg);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-feature-settings: 'tnum';
+}
+
+h1, h2, h3, h4, h5, .brand-font {
+  font-family: 'Manrope', 'Inter', sans-serif;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Tabular Numerals */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Card hover animation */
+.card-hover {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.07);
+}
+
+/* Kitchen Dark UI */
+.kds-dark-container {
+  background-color: #0F172A;
+  color: #F8FAFC;
+}
+.kds-column-header {
+  border-bottom: 2px solid #1E293B;
+}
+
+/* Mobile Frame for Waiter & QR Previews */
+.mobile-device-frame {
+  width: 390px;
+  max-width: 100%;
+  height: 780px;
+  border-radius: 40px;
+  border: 10px solid #1E293B;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  position: relative;
+  background: #FFFFFF;
+}
+
+/* Pulsing badge */
+@keyframes pulse-urgent {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.05); }
+}
+.urgent-pulse {
+  animation: pulse-urgent 1.5s infinite;
+}
+
+/* Printable Thermal Receipt */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #thermal-receipt-modal, #thermal-receipt-modal * {
+    visibility: visible;
+  }
+  #thermal-receipt-modal {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 80mm;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    border: none;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
+
+.thermal-slip {
+  width: 320px;
+  background: #FFFFFF;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  line-height: 1.4;
+  padding: 16px;
+  border-radius: 6px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  color: #000000;
+}
